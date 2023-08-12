@@ -1,9 +1,10 @@
+/* eslint-disable no-undef */
 import axios from "axios";
 import { toaster } from "evergreen-ui";
 
 const cloudaryUpload = async (payload, setCurrentProgress) => axios({
     method: 'POST',
-    url: 'https://api.cloudinary.com/v1_1/dboqyj4bp/auto/upload',
+    url: `${process.env.VITE_REACT_APP_CLOUDINARY_BASEURL}`,
     data: payload,
     onUploadProgress: (progressEvent) => {
       const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
@@ -29,7 +30,7 @@ export const handleUploadImage = (file, setCurrentProgress) => {
     const formData = new FormData();
     formData.append('file', file);
     formData.append(
-      'upload_preset', 'mvybpnf0',
+      'upload_preset', `${process.env.VITE_REACT_APP_CLOUDINARY_PRESET}`,
     );
     return uploadImage(formData, setCurrentProgress);
   };
