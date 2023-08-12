@@ -44,7 +44,7 @@ const PayoutsPage = () => {
               <TextInput
                 name="amount"
                 label="Amount to payout"
-                type="number"
+                type="text"
                 placeholder="100"
                 value={amount}
                 onChange={({ target }) => setAmout(target.value)}
@@ -57,7 +57,7 @@ const PayoutsPage = () => {
             <Button className="bg-transparent border border-fuchsia-500 px-12" onClick={() => navigate(-1)}>
               Back
             </Button>
-            <Button className="bg-fuchsia-500 px-12" disabled={!payoutAddress || !amount}>Next</Button>
+            <Button className="bg-fuchsia-500 px-12" disabled={!payoutAddress || !amount || isNaN(parseFloat(amount)) && !isFinite(amount)}>Next</Button>
           </div>
         </div>
       </div>

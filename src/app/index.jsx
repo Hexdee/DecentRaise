@@ -6,6 +6,7 @@ import CreateCyclePage from "../pages/create-cycle";
 import PayoutsPage from "../pages/payouts";
 import AddNFtPage from "../pages/add-nft";
 import ExploreProjects from "../pages/explore-projects";
+import Project from "../pages/project";
 
 const App = () => {
   return (
@@ -16,6 +17,7 @@ const App = () => {
       <Route path={CREATE_CYCLE} element={<CreateCyclePage />} />
       <Route path={CREATE_PAYOUTS} element={<PayoutsPage />} />
       <Route path={ADD_NFT} element={<AddNFtPage />} />
+      <Route path={`${EXPLORE_PROJECTS}/:projectId`} element={<Project />} />
     </Routes>
   );
 };

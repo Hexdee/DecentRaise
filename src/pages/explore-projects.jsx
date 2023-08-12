@@ -1,4 +1,3 @@
-import { Button } from "../components/ui/button";
 import AuthLayout from "../layout";
 import ProjectCard, { ReasonCard } from "../ui/card";
 import { projects, reasons } from "../utils";
@@ -26,6 +25,7 @@ const ExploreProjects = () => (
             volume={project.volume}
             payment={project.amount}
             imgUrl={project.img}
+            projectId={project.id}
           />
         ))}
       </div>

@@ -29,7 +29,7 @@ const Navbar = () => {
               <Link to={link.href}>
                 <p
                   className={`${
-                    pathname === link.href ? "text-fuchsia-500" : "text-white"
+                    pathname.includes(link.href) ? "text-fuchsia-500" : "text-white"
                   } cursor-pointer hover:text-fuchsia-500`}
                 >
                   {link.title}

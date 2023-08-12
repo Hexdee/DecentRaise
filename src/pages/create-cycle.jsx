@@ -36,7 +36,7 @@ const CreateCyclePage = () => {
               <TextInput
                 name="duation"
                 label="Cycle duration (days)"
-                type="number"
+                type="text"
                 placeholder="0"
                 value={days}
                 onChange={({ target }) => setDays(target.value)}
@@ -63,7 +63,7 @@ const CreateCyclePage = () => {
               </Button>
               <Button
                 className="bg-fuchsia-500 px-12"
-                disabled={!days || !futureDate}
+                disabled={!days || !futureDate || isNaN(parseFloat(days)) && !isFinite(days)}
               >
                 Next
               </Button>
