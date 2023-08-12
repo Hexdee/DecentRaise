@@ -1,9 +1,9 @@
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "../components/ui/button";
-import { CREATE_STAGE_1, HOME_URL } from "../helper/paths";
+import { CREATE_STAGE_1, EXPLORE_PROJECTS, HOME_URL } from "../helper/paths";
 
 const navlinks = [
-  { title: "Explore", href: "/" },
+  { title: "Explore", href: EXPLORE_PROJECTS },
   { title: "Start a project", href: CREATE_STAGE_1 },
 ];
 

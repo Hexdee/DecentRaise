@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/prop-types */
 import { FileCard, FileUploader, MimeType, Pane } from "evergreen-ui";
 import React from "react";
