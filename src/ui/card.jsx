@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 const ProjectCard = ({ desc, title, volume, payment, imgUrl }) => {
   return (
-    <div className="rounded-lg border-fuchsia-200 border w-[18vw] cursor-pointer mr-12 my-8">
+    <div className="rounded-lg border-fuchsia-200 border w-[18vw] cursor-pointer mr-12 my-8 bg-gray-700">
       <img
         src={imgUrl}
         alt="project"
@@ -19,7 +19,9 @@ const ProjectCard = ({ desc, title, volume, payment, imgUrl }) => {
             <p className="font-bold">ETH {volume}</p>
           </div>
           <div className="mt-4">
-            <p className="text-fuchsia-200 font-semibold text-[12px]">PAYMENT</p>
+            <p className="text-fuchsia-200 font-semibold text-[12px]">
+              PAYMENT
+            </p>
             <p className="font-bold">{payment}</p>
           </div>
         </div>
@@ -29,3 +31,13 @@ const ProjectCard = ({ desc, title, volume, payment, imgUrl }) => {
 };
 
 export default ProjectCard;
+
+export const ReasonCard = ({ icon, title, desc, color }) => {
+  return (
+    <div className={`${color} w-[20vw] rounded-lg py-8`}>
+      <div className="bg-[#17141D] rounded-full w-[50px] h-[50px] items-center justify-center flex mx-auto mb-4">{icon}</div>
+      <h3 className="font-bold text-primary text-[22px]">{title}</h3>
+      <p className="text-primary text-[12px]">{desc}</p>
+    </div>
+  );
+};
