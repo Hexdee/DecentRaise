@@ -72,7 +72,7 @@ const AddNFtPage = () => {
             <Button className="bg-transparent border border-fuchsia-500 px-12">
               Back
             </Button>
-            <Button className="bg-fuchsia-500 px-12">Next</Button>
+            <Button className="bg-fuchsia-500 px-12">Connect wallet to deploy</Button>
           </div>
         </div>
       </div>
