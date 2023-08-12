@@ -4,7 +4,7 @@ import React from "react";
 import { Label } from "../components/ui/label";
 import { Progress } from "../components/ui/progress";
 
-const FileInput = ({ files, setFiles, fileName, progress, handleChangeFile, label }) => {
+const FileInput = ({ files, setFiles, fileName, progress, handleChangeFile, label, progressClassName }) => {
   const [fileRejections, setFileRejections] = React.useState([]);
   const handleChange = React.useCallback((files) => {
     setFiles([files[0]]);
@@ -55,9 +55,9 @@ const FileInput = ({ files, setFiles, fileName, progress, handleChangeFile, labe
         <div className="w-full flex items-center my-3">
           <Progress
             value={progress}
-            className="w-[88%]"
+            className={`w-[88%] ${progressClassName}`}
           />
-          <p className="text-sm ml-2 mt-1 w-[12%]">{`${progress}%`}</p>
+          <p className={`text-sm ml-2 mt-1 w-[12%] ${progressClassName}`}>{`${progress}%`}</p>
         </div>
       )}
     </Pane>

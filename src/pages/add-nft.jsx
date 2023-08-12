@@ -2,14 +2,33 @@ import { PlusIcon } from "lucide-react";
 import { Button } from "../components/ui/button";
 import AuthLayout from "../layout";
 import TextInput from "../ui/text-input";
-import React from "react";
+import { useState } from "react";
 import { Dialog, Label, Pane } from "evergreen-ui";
 import FileInput from "../ui/file-input";
 import TextAreaInput from "../ui/textarea-input";
 import CreateProjectLevel from "../layout/create-project-level";
+import { useNavigate } from "react-router-dom";
+import { handleUploadImage } from "../functions";
 
 const AddNFtPage = () => {
-  const [isShown, setIsShown] = React.useState(false);
+  const navigate = useNavigate();
+  const [isShown, setIsShown] = useState(false);
+  const [uploadResponse, setUploadResponse] = useState(null);
+  const [nftName, setNftName] = useState('');
+  const [nftDesc, setNftDesc] = useState('');
+  const [progress, setProgress] = useState();
+  const [image, setImage] = useState();
+
+
+  const handleChangeImage = (file) => {
+    handleUploadImage(file[0], setProgress)
+    .then((res) => setUploadResponse(res));
+  };
+
+  const handleSubmitFile = () => {
+    const payload = { nftName, nftDesc, image: uploadResponse?.secure_url }
+    console.log(payload)
+  }
 
   return (
     <AuthLayout>
@@ -36,7 +55,7 @@ const AddNFtPage = () => {
                   Upload NFT Image *
                 </Label>
                 <div className="-mt-14">
-                  <FileInput />
+                <FileInput handleChangeFile={handleChangeImage} setFiles={setImage} files={image} progress={progress} fileName={uploadResponse && uploadResponse.original_filename || ''} progressClassName="text-black" />
                 </div>
 
                 <TextInput
@@ -45,6 +64,8 @@ const AddNFtPage = () => {
                   placeholder="Enter your project name"
                   className="bg-fuchsia-white text-black placeholder:text-black"
                   labelClassName="text-black"
+                  value={nftName}
+                  onChange={({ target }) => setNftName(target.value)}
                 />
 
                 <TextAreaInput
@@ -53,13 +74,15 @@ const AddNFtPage = () => {
                   placeholder="Write a full description about the NFT"
                   className="bg-fuchsia-white text-black placeholder:text-black"
                   labelClassName="text-black"
+                  value={nftDesc}
+                  onChange={({ target }) => setNftDesc(target.value)}
                 />
 
                 <div className="justify-between w-full flex my-10">
                   <Button className="bg-transparent border border-fuchsia-500 px-12 text-black" onClick={() => setIsShown(false)}>
                     Cancel
                   </Button>
-                  <Button className="bg-fuchsia-500 px-12">Add NFT</Button>
+                  <Button className="bg-fuchsia-500 px-12" disabled={!nftDesc || !nftName || !uploadResponse} onClick={handleSubmitFile}>Add NFT</Button>
                 </div>
               </Dialog>
 
@@ -71,7 +94,7 @@ const AddNFtPage = () => {
           </div>
 
           <div className="justify-between w-full flex my-10">
-            <Button className="bg-transparent border border-fuchsia-500 px-12">
+            <Button className="bg-transparent border border-fuchsia-500 px-12" onClick={() => navigate(-1)}>
               Back
             </Button>
             <Button className="bg-fuchsia-500 px-12">Connect wallet to deploy</Button>
