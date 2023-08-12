@@ -6,6 +6,7 @@ import React from "react";
 import { Dialog, Label, Pane } from "evergreen-ui";
 import FileInput from "../ui/file-input";
 import TextAreaInput from "../ui/textarea-input";
+import CreateProjectLevel from "../layout/create-project-level";
 
 const AddNFtPage = () => {
   const [isShown, setIsShown] = React.useState(false);
@@ -15,7 +16,7 @@ const AddNFtPage = () => {
         <h1 className="underline underline-offset-8 text-center">
           Create a project
         </h1>
-
+        <CreateProjectLevel />
         <div className="mt-14">
           <h1 className="font-bold text-[22px]">NFTs</h1>
           <p className="text-[12px] mt-2 pr-12">

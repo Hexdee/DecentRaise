@@ -1,5 +1,6 @@
 import { Button } from "../components/ui/button";
 import AuthLayout from "../layout";
+import CreateProjectLevel from "../layout/create-project-level";
 import TextInput from "../ui/text-input";
 
 const PayoutsPage = () => {
@@ -9,7 +10,7 @@ const PayoutsPage = () => {
         <h1 className="underline underline-offset-8 text-center">
           Create a project
         </h1>
-
+        <CreateProjectLevel />
         <div className="mt-14">
           <h1 className="font-bold text-[22px]">Payouts</h1>
           <p className="text-[12px] mt-2 pr-12">

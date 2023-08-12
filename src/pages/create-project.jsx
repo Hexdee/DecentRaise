@@ -6,6 +6,7 @@ import TextInput from "../ui/text-input";
 import { yupResolver } from "@hookform/resolvers/yup";
 import TextAreaInput from "../ui/textarea-input";
 import { CreateProjectSchema } from "../validations";
+import CreateProjectLevel from "../layout/create-project-level";
 
 const CreateProjectPage = () => {
   const {
@@ -25,8 +26,10 @@ const CreateProjectPage = () => {
     <AuthLayout>
       <div className="mt-8 px-[400px]">
         <h1 className="underline underline-offset-8 text-center">
-          Start by creating a project
-        </h1>
+          Create a project
+        </h1>     
+
+        <CreateProjectLevel />
 
         <div className="mt-14">
           <h1 className="font-bold text-[22px]">Project Details</h1>
