@@ -1,26 +1,12 @@
-import { useForm } from "react-hook-form";
 import { Button } from "../components/ui/button";
 import AuthLayout from "../layout";
-import FileInput from "../ui/file-input";
 import TextInput from "../ui/text-input";
-import { yupResolver } from "@hookform/resolvers/yup";
-import TextAreaInput from "../ui/textarea-input";
 
 const CreateCyclePage = () => {
-  const {
-    handleSubmit,
-    register,
-    formState: { errors, isDirty, isSubmitting, isValid },
-    ...rest
-  } = useForm({
-    mode: "onChange",
-    // resolver: yupResolver(CreateProjectSchema),
-    delayError: 1000,
-  });
 
   return (
     <AuthLayout>
-      <div className="mt-8 px-[400px]">
+      <div className="mt-8 px-[400px] h-[90vh]">
         <h1 className="underline underline-offset-8 text-center">
           Create a project
         </h1>

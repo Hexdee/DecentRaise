@@ -3,10 +3,10 @@ import { Label } from "../components/ui/label";
 import { Textarea } from "../components/ui/textarea";
 import { ErrorText } from "./error-text";
 
-const TextAreaInput = ({ label, name, type, placeholder, className, errors, onChange, value, defaultValue }) => {
+const TextAreaInput = ({ label, name, type, placeholder, className, errors, onChange, value, defaultValue, labelClassName }) => {
   return (
     <div className="mt-8">
-      <Label htmlFor={name} className="text-sm">{label}</Label>
+      <Label htmlFor={name} className={`${labelClassName} text-sm`}>{label}</Label>
       <Textarea
         type={type || 'text'}
         id={name}

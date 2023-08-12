@@ -3,11 +3,11 @@ import { Input } from "../components/ui/input";
 import { Label } from "../components/ui/label";
 import { ErrorText } from "./error-text";
 
-const TextInput = ({ label, name, type, placeholder, className, errors, onChange, value, defaultValue, maxLength }) => {
+const TextInput = ({ label, name, type, placeholder, className, errors, onChange, value, defaultValue, maxLength, readOnly, disabled, labelClassName }) => {
 
   return (
     <div className="mt-8">
-      <Label htmlFor={name} className="text-sm">{label}</Label>
+      <Label htmlFor={name} className={`${labelClassName} text-sm`}>{label}</Label>
       <Input
         type={type || 'text'}
         id={name}
@@ -19,6 +19,8 @@ const TextInput = ({ label, name, type, placeholder, className, errors, onChange
         onChange={onChange}
         defaultValue={defaultValue || ''}
         value={value}
+        readOnly={readOnly}
+        disabled={disabled}
       />
       <ErrorText message={errors && errors[name]?.message} />
     </div>
