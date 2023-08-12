@@ -92,7 +92,7 @@ const CreateProjectPage = () => {
             <div className="justify-end w-full flex my-10">
               <Button
                 className="bg-fuchsia-500 px-12"
-                disabled={!isDirty || !isValid}
+                // disabled={!isDirty || !isValid}
               >
                 Next
               </Button>
