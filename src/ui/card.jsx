@@ -37,7 +37,7 @@ export const ReasonCard = ({ icon, title, desc, color }) => {
     <div className={`${color} w-[20vw] rounded-lg py-8`}>
       <div className="bg-[#17141D] rounded-full w-[50px] h-[50px] items-center justify-center flex mx-auto mb-4">{icon}</div>
       <h3 className="font-bold text-primary text-[22px]">{title}</h3>
-      <p className="text-primary text-[12px]">{desc}</p>
+      <p className="text-primary text-[12px] px-3">{desc}</p>
     </div>
   );
 };
