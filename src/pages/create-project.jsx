@@ -2,25 +2,50 @@ import { useForm } from "react-hook-form";
 import { Button } from "../components/ui/button";
 import AuthLayout from "../layout";
 import FileInput from "../ui/file-input";
-import TextInput from "../ui/text-input";
 import { yupResolver } from "@hookform/resolvers/yup";
-import TextAreaInput from "../ui/textarea-input";
 import { CreateProjectSchema } from "../validations";
 import CreateProjectLevel from "../layout/create-project-level";
+import { Input } from "../components/ui/input";
+import { Label } from "../components/ui/label";
+import { ErrorText } from "../ui/error-text";
+import { Textarea } from "../components/ui/textarea";
+import React, { useState } from "react";
+import { handleUploadImage } from "../functions";
 
 const CreateProjectPage = () => {
+    const [logo, setLogo] = React.useState([]);
+    const [coverImage, setCoverImage] = React.useState([]);
+    const [progress, setProgress] = React.useState();
+    const [coverImageProgress, setCoverImageProgress] = React.useState();
+    const [logoResponse, setLogoResponse] = useState(null);
+    const [coverImageResponse, setCoverImageResponse] = useState(null);
+    
   const {
     handleSubmit,
     register,
-    formState: { errors, isDirty, isSubmitting, isValid },
-    ...rest
+    formState: { errors, isDirty, isValid },
   } = useForm({
     mode: "onChange",
-    // resolver: yupResolver(CreateProjectSchema),
+    resolver: yupResolver(CreateProjectSchema),
     delayError: 1000,
   });
 
-  console.log(errors);
+  const handleChangeLogo = (file) => {
+    handleUploadImage(file[0], setProgress)
+    .then((res) => setLogoResponse(res));
+  };
+
+  const handleChangeCoverImage = (file) => {
+    handleUploadImage(file[0], setCoverImageProgress)
+    .then((res) => setCoverImageResponse(res));
+  };
+
+  const prevData = JSON.parse(localStorage.getItem('user_project'))
+
+  const submitForm = (data) => {
+    const payload = { ...data, logo: logoResponse?.secure_url, cover_image: coverImageResponse?.secure_url };
+    prevData ? JSON.stringify(localStorage.setItem('user_project', { ...payload, payload })) : JSON.stringify(localStorage.setItem('user_project', payload, payload));
+  }
 
   return (
     <AuthLayout>
@@ -39,63 +64,45 @@ const CreateProjectPage = () => {
             transaction will cost gas.
           </p>
 
-          <form className="mt-8">
-            <TextInput
-              name="project_name"
-              label="Project name *"
-              placeholder="Enter your project name"
-              {...register("project_name", { required: true })}
-              errors={errors}
-            />
-            <TextInput
-              name="tagline"
-              label="Project tagline"
-              placeholder="Enter your tagline (min. 50 characters)"
-              {...register("tagline", { required: true })}
-              maxLength="50"
-              errors={errors}
-            />
-            <TextAreaInput
-              name="description"
-              label="Project description *"
-              placeholder="Write a full description about the project"
-              {...register("description", { required: true })}
-              errors={errors}
-            />
-            <FileInput />
-            <div className="flex justify-between">
+          <form className="mt-8" onSubmit={handleSubmit(submitForm)}>
+            <Label htmlFor='project_name' className='text-sm'>Project Name *</Label>
+            <Input {...register("project_name")} id="project_name" placeholder="Enter your project name" name="project_name" className="rounded-lg mt-2 placeholder:text-xs mb-8" error={errors && errors.project_name?.message} />
+            <ErrorText message={errors && errors.project_name?.message} />
+
+            <Label htmlFor='tagline' className='text-sm'>Project tagline *</Label>
+            <Input {...register("tagline")} id="tagline" placeholder="Enter your project tagline" name="tagline" className="rounded-lg mt-2 placeholder:text-xs mb-8" error={errors && errors.tagline?.message} />
+            <ErrorText message={errors && errors.tagline?.message} />
+
+
+            <Label htmlFor='project_description' className='text-sm'>Project description *</Label>
+            <Textarea {...register("project_description")} id="project_description" placeholder="Enter your project description" name="project_description" className="rounded-lg mt-2 placeholder:text-xs" error={errors && errors.project_description?.message} />
+            <ErrorText message={errors && errors.project_description?.message} />
+
+            <FileInput handleChangeFile={handleChangeLogo} setFiles={setLogo} files={logo} progress={progress} fileName={logoResponse && logoResponse.original_filename || ''} />
+
+            <div className="flex justify-between mb-8">
               <div>
-                <TextInput
-                  name="website_link"
-                  label="Website *"
-                  placeholder="Enter your website link"
-                  {...register("website_link", { required: false })}
-                    errors={errors}
-                />
+                <Label htmlFor='website_link' className='text-sm'>Website link</Label>
+                <Input {...register("website_link")} id="website_link" placeholder="Enter your website link" name="website_link" className="rounded-lg mt-2 placeholder:text-xs" error={errors && errors.website_link?.message} />
+                <ErrorText message={errors && errors.website_link?.message} />
               </div>
               <div>
-                <TextInput
-                  name="twitter_handle"
-                  label="Twitter *"
-                  placeholder="Enter your Twitter handle"
-                  {...register("twitter_handle", { required: false })}
-                    errors={errors}
-                />
+                <Label htmlFor='project_owner_address' className='text-sm'>Twitter handle</Label>
+                <Input {...register("twitter_handle")} id="twitter_handle" placeholder="Enter your twitter handle" name="twitter_handle" className="rounded-lg mt-2 placeholder:text-xs" error={errors && errors.twitter_handle?.message} />
+                <ErrorText message={errors && errors.twitter_handle?.message} />
               </div>
             </div>
-            <TextInput
-              name="project_owner_address"
-              label="Project owner address (optional)"
-              placeholder="00xxxxxxxx"
-              {...register("project_owner_address", { required: false })}
-              errors={errors}
-            />
-            <FileInput />
+
+                <Label htmlFor='project_owner_address' className='text-sm'>Project owner address</Label>
+                <Input {...register("project_owner_address", { required: true })} id="project_owner_address" placeholder="00xxxxxxxx" name="project_owner_address" className="rounded-lg mt-2 placeholder:text-xs" error={errors && errors.project_owner_address?.message} />
+                <ErrorText message={errors && errors.project_owner_address?.message} />
+
+            <FileInput handleChangeFile={handleChangeCoverImage} setFiles={setCoverImage} files={coverImage} progress={coverImageProgress} fileName={coverImageResponse && coverImageResponse.original_filename || ''} label="Cover Image" />
 
             <div className="justify-end w-full flex my-10">
               <Button
                 className="bg-fuchsia-500 px-12"
-                // disabled={!isDirty || !isValid}
+                disabled={!isDirty || !isValid || !logoResponse}
               >
                 Next
               </Button>

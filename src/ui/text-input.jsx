@@ -3,7 +3,7 @@ import { Input } from "../components/ui/input";
 import { Label } from "../components/ui/label";
 import { ErrorText } from "./error-text";
 
-const TextInput = ({ label, name, type, placeholder, className, errors, onChange, value, defaultValue, maxLength, readOnly, disabled, labelClassName }) => {
+const TextInput = ({ label, name, type, placeholder, className, errors, onChange, value, defaultValue, maxLength, readOnly, disabled, labelClassName, ref, ...props }) => {
 
   return (
     <div className="mt-8">
@@ -18,9 +18,11 @@ const TextInput = ({ label, name, type, placeholder, className, errors, onChange
         error={errors && errors[name]?.message}
         onChange={onChange}
         defaultValue={defaultValue || ''}
-        value={value}
         readOnly={readOnly}
         disabled={disabled}
+        ref={ref}
+        value={value}
+        {...props}
       />
       <ErrorText message={errors && errors[name]?.message} />
     </div>
