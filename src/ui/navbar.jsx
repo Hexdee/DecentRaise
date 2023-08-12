@@ -2,7 +2,7 @@ import { Button } from "../components/ui/button";
 
 const Navbar = () => {
   return (
-    <nav className="px-24 py-6">
+    <nav className="px-24 -mt-2">
       <div className="flex items-center w-full justify-between">
         <div className="w-[60vw] flex items-center">
           <div className="flex items-center w-[22vw]">
