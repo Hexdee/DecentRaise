@@ -1,9 +1,14 @@
+import { useState } from "react";
 import { Button } from "../components/ui/button";
 import AuthLayout from "../layout";
 import CreateProjectLevel from "../layout/create-project-level";
 import TextInput from "../ui/text-input";
+import { useNavigate } from "react-router-dom";
 
 const CreateCyclePage = () => {
+  const navigate = useNavigate();
+  const [days, setDays] = useState('');
+  const [futureDate, setFutureDate] = useState(''); 
 
   return (
     <AuthLayout>
@@ -33,6 +38,8 @@ const CreateCyclePage = () => {
                 label="Cycle duration (days)"
                 type="number"
                 placeholder="0"
+                value={days}
+                onChange={({ target }) => setDays(target.value)}
               />
               <p className="text-fuchsia-500 text-xs mt-2">Note: Only days allowed</p>
 
@@ -41,6 +48,8 @@ const CreateCyclePage = () => {
                 label="Set a future date & time to start your project's first cycle."
                 type="date"
                 placeholder="0"
+                value={futureDate}
+                onChange={({ target }) => setFutureDate(target.value)}
               />
             </form>
           </div>
@@ -48,11 +57,13 @@ const CreateCyclePage = () => {
           <div className="justify-between w-full flex my-10">
           <Button
                 className="bg-transparent border border-fuchsia-500 px-12"
+                onClick={() => navigate(-1)}
               >
                 Back
               </Button>
               <Button
                 className="bg-fuchsia-500 px-12"
+                disabled={!days || !futureDate}
               >
                 Next
               </Button>

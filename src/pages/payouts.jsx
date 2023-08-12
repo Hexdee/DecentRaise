@@ -1,12 +1,17 @@
+import { useState } from "react";
 import { Button } from "../components/ui/button";
 import AuthLayout from "../layout";
 import CreateProjectLevel from "../layout/create-project-level";
 import TextInput from "../ui/text-input";
+import { useNavigate } from "react-router-dom";
 
 const PayoutsPage = () => {
+  const navigate = useNavigate();
+  const [payoutAddress, setPayoutAddress] = useState('');
+  const [amount, setAmout] = useState('');
   return (
     <AuthLayout>
-      <div className="mt-8 px-[400px] h-[90vh]">
+      <div className="mt-8 px-[400px]">
         <h1 className="underline underline-offset-8 text-center">
           Create a project
         </h1>
@@ -30,10 +35,10 @@ const PayoutsPage = () => {
                 label="Wallet Address"
                 type="text"
                 placeholder="00xxxxxxxxx"
-                readOnly
-                disabled
+                value={payoutAddress}
+                onChange={({ target }) => setPayoutAddress(target.value)}
               />
-              <p className="text-xs mt-2">Click add payouts to automatically add your wallet address to the input field</p>
+              <p className="text-xs mt-2">Fill your payouts wallet address to the input field or connect your wallet</p>
               <Button className="bg-fuchsia-500 px-12 w-full mt-8">Add payout wallet +</Button>
 
               <TextInput
@@ -41,16 +46,18 @@ const PayoutsPage = () => {
                 label="Amount to payout"
                 type="number"
                 placeholder="100"
+                value={amount}
+                onChange={({ target }) => setAmout(target.value)}
               />
               <p className="text-xs mt-2">Input the amout you want to withdraw</p>
             </form>
           </div>
 
           <div className="justify-between w-full flex my-8">
-            <Button className="bg-transparent border border-fuchsia-500 px-12">
+            <Button className="bg-transparent border border-fuchsia-500 px-12" onClick={() => navigate(-1)}>
               Back
             </Button>
-            <Button className="bg-fuchsia-500 px-12">Next</Button>
+            <Button className="bg-fuchsia-500 px-12" disabled={!payoutAddress || !amount}>Next</Button>
           </div>
         </div>
       </div>

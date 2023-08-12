@@ -10,6 +10,7 @@ import CreateProjectLevel from "../layout/create-project-level";
 
 const AddNFtPage = () => {
   const [isShown, setIsShown] = React.useState(false);
+
   return (
     <AuthLayout>
       <div className="mt-8 px-[400px] h-[90vh]">
