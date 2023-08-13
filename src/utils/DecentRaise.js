@@ -106,8 +106,7 @@ export async function getCampaigns() {
     }
     for(let i = 0; i < totalCampaigns; i++) {
         try {
-            const {cover, deadline, description, goal, isCampaignActive, logo, name, nftAddress, projectLink, tagline, totalContributions, twitter } = await getCampaign(i)
-            const campaign = {id: i, cover, deadline, description, goal: ethers.utils.formatEther(goal), isCampaignActive, logo, name, nftAddress, projectLink, tagline, totalContributions: ethers.utils.formatEther(totalContributions), twitter };
+            const campaign = await getCampaign(i);
             campaigns.push(campaign);
         } catch (err) {
             console.log({err});
@@ -120,8 +119,8 @@ export async function getCampaigns() {
 export async function getCampaign(campaignId) {
     try {
         const decentRaise = await getReadOnlyDecentRaise();
-        const campaign = await decentRaise.campaigns(campaignId);
-        // console.log(campaign)
+        const {cover, deadline, description, goal, isCampaignActive, logo, name, nftAddress, projectLink, tagline, totalContributions, twitter } = await decentRaise.campaigns(campaignId);
+        const campaign = {id: campaignId, cover, deadline: Number(deadline), description, goal: ethers.utils.formatEther(goal), isCampaignActive, logo, name, nftAddress, projectLink, tagline, totalContributions: ethers.utils.formatEther(totalContributions), twitter };
         return campaign;
     } catch (err) {
         window.alert(`Error: ${err.message}`);
