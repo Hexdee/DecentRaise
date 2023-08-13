@@ -130,6 +130,7 @@ export async function getCampaign(campaignId) {
 export async function contribute(campaignId, amount) {
     try {
         const decentRaise = await getDecentRaise();
+        console.log(ethers.utils.parseEther(amount));
         const tx = await decentRaise.contribute(campaignId, {value: ethers.utils.parseEther(amount)});
         await tx.wait();
         window.alert("Contributed successfully!");

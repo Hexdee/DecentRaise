@@ -3,7 +3,7 @@ import AuthLayout from "../layout";
 import TextInput from "../ui/text-input";
 import { Button } from "../components/ui/button";
 import { useParams } from "react-router-dom";
-import { getCampaign } from "../utils/DecentRaise";
+import { contribute, getCampaign } from "../utils/DecentRaise";
 
 const Project = () => {
     const [project, setProject] = useState();  
@@ -12,33 +12,35 @@ const Project = () => {
     const [timeRemaining, setTimeRemaining] = useState({days: 0, hours: 0, minutes: 0, seconds: 0});
 
     useEffect(() => {
-      const getProject = async() => {
-        const _project = await getCampaign(projectId);
-        setProject(_project);
-        timestampToDateCountdown(new Date(_project.deadline));
+      init();
+    }, []);
+    
+    const init = async() => {
+      const _project = await getCampaign(projectId);
+      setProject(_project);
+      timestampToDateCountdown(new Date(_project.deadline));
+    }
+
+    function timestampToDateCountdown(targetTimestamp) {
+      const currentTimestamp = Math.floor(Date.now() / 1000); // Get current timestamp in seconds
+      const _timeRemaining = targetTimestamp - currentTimestamp;
+      console.log(Math.floor(_timeRemaining / (60*60*24)));
+    
+      if (_timeRemaining <= 0) {
+        return;
       }
+    
+      const days = Math.floor(_timeRemaining / (60 * 60 * 24));
+      const hours = Math.floor((_timeRemaining % (60 * 60 * 24)) / (60 * 60));
+      const minutes = Math.floor((_timeRemaining % (60 * 60)) / 60);
+      const seconds = _timeRemaining % 60;
 
-      function timestampToDateCountdown(targetTimestamp) {
-        const currentTimestamp = Math.floor(Date.now() / 1000); // Get current timestamp in seconds
-        const _timeRemaining = targetTimestamp - currentTimestamp;
-        console.log(Math.floor(_timeRemaining / (60*60*24)));
-      
-        if (_timeRemaining <= 0) {
-          return;
-        }
-      
-        const days = Math.floor(_timeRemaining / (60 * 60 * 24));
-        const hours = Math.floor((_timeRemaining % (60 * 60 * 24)) / (60 * 60));
-        const minutes = Math.floor((_timeRemaining % (60 * 60)) / 60);
-        const seconds = _timeRemaining % 60;
-  
-        setTimeRemaining({days, hours, minutes, seconds})
-      }
-      
-      getProject();
-    }, [projectId]);
+      setTimeRemaining({days, hours, minutes, seconds})
+    }
 
-
+    const support = () => {
+      contribute(projectId, supportAmount.toString());
+    }
 
   return (
     <AuthLayout>
@@ -87,12 +89,12 @@ const Project = () => {
                     value={supportAmount}
                     onChange={({ target }) => setSupportAmount(target.value)}
                 />
-                <Button className="h-[50px] mt-4 ml-4 hover:bg-white hover:text-fuchsia-500" disabled={!supportAmount || isNaN(parseFloat(supportAmount)) && !isFinite(supportAmount)}>Add Payment</Button>
+                <Button onClick={support} className="h-[50px] mt-4 ml-4 hover:bg-white hover:text-fuchsia-500" disabled={!supportAmount || isNaN(parseFloat(supportAmount)) && !isFinite(supportAmount)}>Add Payment</Button>
             </div>
             </div>
             <div className="bg-fuchsia-500 mt-24 rounded-lg p-6 w-[40vw]">
                 <p className="font-bold text-primary">Deadline date:</p>
-                <p className="text-[30px] font-bold mt-4 text-primary">{timeRemaining.days}d 04h 09m 40s</p>
+                <p className="text-[30px] font-bold mt-4 text-primary">{timeRemaining.days}d {timeRemaining.hours}h {timeRemaining.minutes}m {timeRemaining.seconds}s</p>
             </div>
         </div>
       </div>
