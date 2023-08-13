@@ -1,9 +1,23 @@
+import { useEffect, useState } from "react";
 import { Button } from "../components/ui/button";
 import AuthLayout from "../layout";
 import ProjectCard, { ReasonCard } from "../ui/card";
-import { projects, reasons } from "../utils";
+import { reasons } from "../utils";
+import { getCampaigns } from "../utils/DecentRaise";
+import { useNavigate } from "react-router-dom";
+import { CREATE_STAGE_1, EXPLORE_PROJECTS } from "../helper/paths";
 
-const Home = () => (
+const Home = () => {
+  const navigate = useNavigate();
+  const [projects, setProjects] = useState([]);
+  useEffect(() => {
+    init();
+  }, []);
+  const init = async() => {
+    const _campaigns = await getCampaigns();
+    setProjects(_campaigns);
+  }
+  return (
   <AuthLayout>
     <h1 className="text-[70px] font-bold mt-36 mx-auto text-center">
       Fund your idea
@@ -15,12 +29,14 @@ const Home = () => (
 
     <div className="w-[50%] mt-10 justify-center mx-auto flex">
       <Button
+        onClick={() => navigate(EXPLORE_PROJECTS)}
         variant="outline"
         className="border-l-fuchsia-200 border-[0.5px] bg-transparent h-[50px] px-8 font-bold"
       >
         Explore projects
       </Button>
       <Button
+        onClick={() => navigate(CREATE_STAGE_1)}
         variant="outline"
         className=" bg-fuchsia-500 border-none h-[50px] px-8 text-primary font-bold ml-6"
       >
@@ -29,18 +45,18 @@ const Home = () => (
     </div>
 
     <div className="px-24 mt-12">
-      <h3 className="underline underline-offset-8 cursor-pointer hover:text-fuchsia-500 mb-6">
+      <h3 className="mb-6 underline cursor-pointer underline-offset-8 hover:text-fuchsia-500">
         Explore Ideas
       </h3>
-      <div className="w-full block md:flex flex-row flex-wrap">
+      <div className="flex-row flex-wrap block w-full md:flex">
         {projects.map((project) => (
           <ProjectCard
-            key={project.title}
-            desc={project.desc}
-            title={project.title}
-            volume={project.volume}
-            payment={project.amount}
-            imgUrl={project.img}
+            key={project.id}
+            desc={project.description}
+            title={project.name}
+            volume={project.goal}
+            payment={project.totalContributions}
+            imgUrl={project.logo}
           />
         ))}
       </div>
@@ -61,7 +77,7 @@ const Home = () => (
       </div>
     </div>
 
-    <div className="text-center my-20">
+    <div className="my-20 text-center">
       <h1 className="font-bold text-[50px]">Why Decentraise ?</h1>
       <p className="mt-8">
         Open a full-featured Ethereum treasury with programmable spending in
@@ -93,6 +109,6 @@ const Home = () => (
       </div>
     </div>
   </AuthLayout>
-);
+)};
 
 export default Home;
