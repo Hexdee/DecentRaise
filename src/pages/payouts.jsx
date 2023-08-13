@@ -12,7 +12,7 @@ const PayoutsPage = () => {
   return (
     <AuthLayout>
       <div className="mt-8 px-[400px]">
-        <h1 className="underline underline-offset-8 text-center">
+        <h1 className="text-center underline underline-offset-8">
           Create a project
         </h1>
         <CreateProjectLevel />
@@ -25,9 +25,9 @@ const PayoutsPage = () => {
             each cycle.
           </p>
 
-          <div className="mt-8 border border-fuchsia-500 rounded-lg p-4">
+          <div className="p-4 mt-8 border rounded-lg border-fuchsia-500">
             <h1 className="font-bold">Payout recipients</h1>
-            <p className="text-xs mt-2">Add wallet addresses to your Decentraise projects to receive payouts.</p>
+            <p className="mt-2 text-xs">Add wallet addresses to your Decentraise projects to receive payouts.</p>
 
             <form>
               <TextInput
@@ -38,8 +38,8 @@ const PayoutsPage = () => {
                 value={payoutAddress}
                 onChange={({ target }) => setPayoutAddress(target.value)}
               />
-              <p className="text-xs mt-2">Fill your payouts wallet address to the input field or connect your wallet</p>
-              <Button className="bg-fuchsia-500 px-12 w-full mt-8">Add payout wallet +</Button>
+              <p className="mt-2 text-xs">Fill your payouts wallet address to the input field or connect your wallet</p>
+              <Button className="w-full px-12 mt-8 bg-fuchsia-500">Add payout wallet +</Button>
 
               <TextInput
                 name="amount"
@@ -49,15 +49,15 @@ const PayoutsPage = () => {
                 value={amount}
                 onChange={({ target }) => setAmout(target.value)}
               />
-              <p className="text-xs mt-2">Input the amout you want to withdraw</p>
+              <p className="mt-2 text-xs">Input the amout you want to withdraw</p>
             </form>
           </div>
 
-          <div className="justify-between w-full flex my-8">
-            <Button className="bg-transparent border border-fuchsia-500 px-12" onClick={() => navigate(-1)}>
+          <div className="flex justify-between w-full my-8">
+            <Button className="px-12 bg-transparent border border-fuchsia-500" onClick={() => navigate(-1)}>
               Back
             </Button>
-            <Button className="bg-fuchsia-500 px-12" disabled={!payoutAddress || !amount || isNaN(parseFloat(amount)) && !isFinite(amount)}>Next</Button>
+            <Button className="px-12 bg-fuchsia-500" disabled={!payoutAddress || !amount || isNaN(parseFloat(amount)) && !isFinite(amount)}>Next</Button>
           </div>
         </div>
       </div>

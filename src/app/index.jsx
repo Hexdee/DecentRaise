@@ -7,18 +7,32 @@ import PayoutsPage from "../pages/payouts";
 import AddNFtPage from "../pages/add-nft";
 import ExploreProjects from "../pages/explore-projects";
 import Project from "../pages/project";
+import { createContext, useState } from "react";
+import { connectWallet } from "../utils/DecentRaise";
+
+export const UserContext = createContext();
 
 const App = () => {
+  const [account, setAccount] = useState("");
+  const user =  {account, connectWallet: connect}
+
+  async function connect() {
+    const _account = await connectWallet();
+    setAccount(_account);
+  }
+
   return (
-    <Routes>
-      <Route path={HOME_URL} index element={<Home />} />
-      <Route path={EXPLORE_PROJECTS} index element={<ExploreProjects />} />
-      <Route path={CREATE_STAGE_1} element={<CreateProjectPage />} />
-      <Route path={CREATE_CYCLE} element={<CreateCyclePage />} />
-      <Route path={CREATE_PAYOUTS} element={<PayoutsPage />} />
-      <Route path={ADD_NFT} element={<AddNFtPage />} />
-      <Route path={`${EXPLORE_PROJECTS}/:projectId`} element={<Project />} />
-    </Routes>
+    <UserContext.Provider value={user}>
+      <Routes>
+        <Route path={HOME_URL} index element={<Home />} />
+        <Route path={EXPLORE_PROJECTS} index element={<ExploreProjects />} />
+        <Route path={CREATE_STAGE_1} element={<CreateProjectPage />} />
+        <Route path={CREATE_CYCLE} element={<CreateCyclePage />} />
+        <Route path={CREATE_PAYOUTS} element={<PayoutsPage />} />
+        <Route path={ADD_NFT} element={<AddNFtPage />} />
+        <Route path={`${EXPLORE_PROJECTS}/:projectId`} element={<Project />} />
+      </Routes>
+    </UserContext.Provider>
   );
 };
 

@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
-import { ADD_NFT, CREATE_CYCLE, CREATE_PAYOUTS, CREATE_STAGE_1 } from "../helper/paths";
+import { ADD_NFT, CREATE_STAGE_1 } from "../helper/paths";
 
 const CreateProjectLevel = () => {
     const { pathname } = useLocation();
@@ -7,14 +7,6 @@ const CreateProjectLevel = () => {
         {
             title: 'DETAILS',
             href: CREATE_STAGE_1,
-        },
-        {
-            title: 'CYCLE',
-            href: CREATE_CYCLE,
-        },
-        {
-            title: 'PAYOUTS',
-            href: CREATE_PAYOUTS,
         },
         {
             title: 'ADD NFT',
