@@ -14,7 +14,7 @@ export const UserContext = createContext();
 
 const App = () => {
   const [account, setAccount] = useState("");
-  const user =  {account, connectWallet: connect}
+  const user =  {account, connectWallet: connect};
 
   async function connect() {
     const _account = await connectWallet();

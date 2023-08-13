@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { handleUploadImage } from "../functions";
 import { UserContext } from "../app";
 import { createCampaign } from "../utils/DecentRaise";
+import { HOME_URL } from "../helper/paths";
 
 const AddNFtPage = () => {
   const navigate = useNavigate();
@@ -30,6 +31,7 @@ const AddNFtPage = () => {
     const campaign = JSON.parse(localStorage.getItem('user_project'));
     campaign.token_symbol = nftSymbol;
     await createCampaign(campaign);
+    navigate(HOME_URL);
   }
 
   return (

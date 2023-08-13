@@ -22,7 +22,7 @@ contract DecentRaise {
     mapping(uint => mapping(address => uint)) contributions;
     Campaign[] public campaigns;
 
-    uint totalCampaigns = 0;
+    uint public totalCampaigns = 0;
 
     constructor() {}
 
@@ -30,14 +30,6 @@ contract DecentRaise {
         require(
             campaigns[campaignId].isCampaignActive,
             "Campaign is not active"
-        );
-        _;
-    }
-
-    modifier campaignEnded(uint campaignId) {
-        require(
-            block.timestamp >= campaigns[campaignId].deadline,
-            "Campaign has not ended"
         );
         _;
     }
@@ -81,7 +73,7 @@ contract DecentRaise {
             block.timestamp < campaigns[campaignId].deadline,
             "Campaign is not active"
         );
-        require(msg.value > 0, "Contribution amount must be greater than 0");
+        require(msg.value > 0, "Contribution must be > 0");
         contributions[campaignId][msg.sender] += msg.value;
         campaigns[campaignId].totalContributions += msg.value;
 
@@ -115,15 +107,15 @@ contract DecentRaise {
         require(success, "Transfer failed");
     }
 
-    function getRefund(uint campaignId) external campaignEnded(campaignId) {
+    function getRefund(uint campaignId) external {
+        require(
+            block.timestamp >= campaigns[campaignId].deadline,
+            "Campaign has not ended"
+        );
         require(
             campaigns[campaignId].totalContributions <
                 campaigns[campaignId].goal,
             "Campaing was successfull"
-        );
-        require(
-            contributions[campaignId][msg.sender] > 0,
-            "No funds to refund"
         );
 
         campaigns[campaignId].isCampaignActive = false;
@@ -131,9 +123,5 @@ contract DecentRaise {
         contributions[campaignId][msg.sender] = 0;
         (bool success, ) = payable(msg.sender).call{value: amount}("");
         require(success, "Transfer failed");
-    }
-
-    function getCampaigns() external view returns (Campaign[] memory) {
-        return campaigns;
     }
 }
