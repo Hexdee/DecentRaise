@@ -17,16 +17,16 @@ const ProjectCard = ({ desc, title, volume, payment, imgUrl, projectId }) => {
           </h2>
           <p className="text-[11px] mt-2">{desc}</p>
 
-          <div className="flex w-full justify-between">
+          <div className="flex justify-between w-full">
             <div className="mt-4">
-              <p className="text-fuchsia-200 font-semibold text-[12px]">VOLUME</p>
+              <p className="text-fuchsia-200 font-semibold text-[12px]">Raised</p>
               <p className="font-bold">ETH {volume}</p>
             </div>
             <div className="mt-4">
               <p className="text-fuchsia-200 font-semibold text-[12px]">
-                PAYMENT
+                Target
               </p>
-              <p className="font-bold">{payment}</p>
+              <p className="font-bold">ETH {payment}</p>
             </div>
           </div>
         </div>

@@ -1,17 +1,19 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import AuthLayout from "../layout";
 import ProjectCard, { ReasonCard } from "../ui/card";
-import { projects, reasons } from "../utils";
+import { reasons } from "../utils";
 import { getCampaigns } from "../utils/DecentRaise";
 
 const ExploreProjects = () => {
+  const [campaigns, setCampaigns] = useState([]);
   useEffect(() => {
     init();
   }, []);
 
   const init = async() => {
-    const campaigns = await getCampaigns();
-    console.log(campaigns);
+    const _campaigns = await getCampaigns();
+    console.log("campaigns", campaigns);
+    setCampaigns(_campaigns);
   }
   return (
     <AuthLayout>
@@ -28,14 +30,14 @@ const ExploreProjects = () => {
           Explore Ideas
         </h3>
         <div className="flex-row flex-wrap block w-full md:flex">
-          {projects.map((project) => (
+          {campaigns.map((project) => (
             <ProjectCard
-              key={project.title}
-              desc={project.desc}
-              title={project.title}
-              volume={project.volume}
-              payment={project.amount}
-              imgUrl={project.img}
+              key={project.id}
+              desc={project.description}
+              title={project.name}
+              volume={project.totalContributions}
+              payment={project.goal}
+              imgUrl={project.logo}
               projectId={project.id}
             />
           ))}
